@@ -1,0 +1,117 @@
+<section>
+  <div class="container">
+    <div>
+      <h1 class="text-center my-5 pb-5 text-primary">My Cart</h1>
+      <div class="row pt-5">
+        <div class="col-md-6 col-sm-12">
+          <div *ngIf="cartService.cartProducts.length">
+            <div class="row g-0" *ngFor="let product of cartService.cartProducts; index as i">
+              <div class="col-md-4 col-sm-12 pb-3 pe-5">
+                <img [src]="product?.cartProduct.url" class="card-img-top img-fluid rounded" style="max-height: 35rem"
+                  alt="blog1" />
+              </div>
+              <div class="col-md-8 col-sm-12 d-flex ps-5">
+                <div class="card-body m-auto">
+                  <div class="row">
+                    <div class="col-md-10">
+                      <h1 class="card-title pb-3">
+                        {{ product?.cartProduct.name }}
+                      </h1>
+                      <h5 class="card-title pb-3">
+                        {{ product?.cartProduct.price | currency }}
+                      </h5>
+                      <button type="button" class="btn btn-primary" (click)="decreament(product)">
+                        -
+                      </button>
+                      <span class="px-3">{{ product?.cartProduct.quantity }}</span>
+                      <button type="button" class="btn btn-primary" (click)="increament(product)">
+                        +
+                      </button>
+                    </div>
+                    <div class="d-inline col-md-2 float-start">
+                      <button type="button" class="btn btn-danger m-auto"
+                        (click)="cartService.removeFromCart(product, i)">
+                        x
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h1 class="mt-5">
+              Total: {{ cartService.totalPrice | currency }}
+            </h1>
+          </div>
+        </div>
+        <div *ngIf="cartService.cartProducts.length" class="col-md-6 col-sm-12 ps-5">
+          <form [formGroup]="order" (ngSubmit)="submitForm(order)">
+            <div class="mb-3">
+              <label for="fullName" class="form-label">Full Name</label>
+              <input type="text" class="form-control" formControlName="fullName" />
+              <div
+                *ngIf="order.get('fullName')?.invalid && (order.get('fullName')?.touched || order.get('fullName')?.dirty)"
+                class="validations mt-3">
+                <div *ngIf="order.get('fullName')?.errors?.['required']" class="alert alert-danger">
+                  Full name is required!
+                </div>
+                <div *ngIf="order.get('fullName')?.errors?.['minlength']" class="alert alert-danger">
+                  Full name must contain at least 3 characters!
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="address" class="form-label">Address</label>
+              <input class="form-control" formControlName="address">
+              <div
+                *ngIf="order.get('address')?.errors && (order.get('address')?.touched || order.get('address')?.dirty)"
+                class="validations mt-3">
+                <div *ngIf="order.get('address')?.errors?.['required']" class="alert alert-danger">
+                  Address is required!
+                </div>
+                <div *ngIf="order.get('address')?.errors?.['minlength']" class="alert alert-danger">
+                  Address must contain at least 6 characters!
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="creditCard" class="form-label">Credit Card</label>
+              <input type="text" class="form-control" formControlName="creditCard" aria-describedby="emailHelp" />
+              <div id="emailHelp" class="form-text">
+                We'll never share your email with anyone else.
+              </div>
+              <div
+                *ngIf="order.get('creditCard')?.errors && (order.get('creditCard')?.touched || order.get('creditCard')?.dirty)"
+                class="validations mt-3">
+                <div *ngIf="order.get('creditCard')?.errors?.['required']" class="alert alert-danger">
+                  CreditCard is required!
+                </div>
+                <div *ngIf="order.get('creditCard')?.errors?.['pattern']" class="alert alert-danger">
+                  CreditCard must be numbers only 16 digits!
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-primary" [disabled]="order.invalid">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="container w-100" *ngIf="!cartService.cartProducts.length">
+    <div class="empty-state">
+      <div class="empty-state-content">
+        <div class="empty-state__message text-primary">
+          No products have been added yet!
+        </div>
+        <div class="empty-state__help">
+          To add a new product, please visit products by clicking the button on
+          top bottom side.
+        </div>
+        <button type="button" class="btn btn-primary mt-4" [routerLink]="['/products']">
+          Go to Products list
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

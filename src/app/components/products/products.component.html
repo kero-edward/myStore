@@ -1,0 +1,33 @@
+<section class="pt-5 mt-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-sm-12 product-index" *ngFor="let product of products; index as i">
+        <div class="card border-0" style="width: 18rem product-container">
+          <a routerLink="{{product?.id}}">
+            <img [src]="product?.url" class="card-img-top img-fluid round-0 p-3" style="
+              max-height: 30rem;
+              min-height: 20rem;
+              border: 1px solid black;
+              border-radius: 0;
+            " alt="{{ product?.name }}" /></a>
+          <div class="card-body text-center">
+            <h5 class="card-title">{{ product?.name }}</h5>
+            <p class="card-text">
+              {{ product.price | currency }}
+            </p>
+            <button type="button" class="btn btn-primary" (click)="decreament(product)">
+              -
+            </button>
+            <span class="px-3">{{ product?.quantity }}</span>
+            <button type="button" class="btn btn-primary" (click)="increament(product)">
+              +
+            </button>
+            <button class="btn btn-primary d-block m-auto mt-3" (click)="cartService.addToCart(product)">
+              Add to card
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

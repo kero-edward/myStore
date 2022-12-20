@@ -1,0 +1,54 @@
+<section class="pt-5 ">
+  <div class="container pt-5">
+    <div class="row g-0">
+      <div class="col-md-4 col-sm-12 pb-3 pe-5">
+        <img
+          [src]="myProduct?.url"
+          class="card-img-top img-fluid rounded"
+          style="max-height: 35rem"
+          alt="blog1"
+        />
+      </div>
+      <div class="col-md-8 col-sm-12 d-flex ps-5">
+        <div class="card-body m-auto">
+          <h1 class="card-title pb-3">{{ myProduct?.name }}</h1>
+          <h5 class="card-title pb-3">
+            {{ myProduct?.price | currency }}
+          </h5>
+          <div class="card-text">
+            {{ myProduct?.description }}
+          </div>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="decreament(myProduct)"
+          >
+            -
+          </button>
+          <span class="px-3">{{ myProduct?.quantity }}</span>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="increament(myProduct)"
+          >
+            +
+          </button>
+          <div>
+            <button
+              class="btn btn-primary m-auto mt-3"
+              (click)="cartService.addToCart(myProduct)"
+            >
+              Add to card
+            </button>
+          </div>
+          <div class="pt-3">
+            <a routerLink="/products" style="text-decoration: none;"
+              ><i class="fa-solid fa-left-long text-primary pe-2"></i>
+              Back to product list
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
